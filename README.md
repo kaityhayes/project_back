@@ -43,3 +43,8 @@ What was the most surprising aspect of working in a group/a thing (or things) yo
 You will be sharing your app and your code. Be prepared to answer questions from the instructors and other students. All group members should speak during presentation.
 
 https://git.generalassemb.ly/Software-Engineering-Immersive-Remote/SEIR-Ollivanders/tree/master/unit_3/27_project/project_3#attendance
+
+
+--WEATHER APP--
+Unti 3, full-stack MERN
+Created by Dominique Clark and Kaity Hayes 

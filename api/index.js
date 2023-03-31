@@ -1,10 +1,11 @@
 const express = require('express')
 const App = express()
-
-const Cities = require('./cities')
+const cors = require('cors')
+const Cities = require('./models/cities')
+const City = require('./models/cities.js')
 
 App.post('/cities', async (req, res) => {
-    letcities = new Cities()
+    let cities = new City()
 
     let citiesData = await cities.getCitiesData(78702, 'us')
 

@@ -1,38 +1,38 @@
 const express = require('express')
-const router = express.Router()
+const App = express()
 
-const Weather = require('./weather')
+const Cities = require('./cities')
 
-router.post('/weather', async (req, res) => {
-    let weather = new Weather()
+App.post('/cities', async (req, res) => {
+    letcities = new Cities()
 
-    let weatherData = await weather.getWeatherData(78702, 'us')
+    let citiesData = await cities.getCitiesData(78702, 'us')
 
 
     res.header('Content-Type', 'application/json')
-    res.send(JSON.stringify(weatherData, null, 4))
+    res.send(JSON.stringify(citiesData, null, 4))
 });
 
 
-router.post('/weatherMongo', async (req, res) => {
+App.post('/citiesMongo', async (req, res) => {
     const {zipCode, tempImperial} = req.body
-    let weather = new Weather()
-    let weatherData = await weather.getWeatherData(zipCode, tempImperial)
+    let cities = new Cities()
+    let citiesData = await cities.getCitiesData(zipCode, tempImperial)
 
-    await weather.saveWeatherDataMongo(zipCode, weatherData)
+    await cities.saveCitiesDataMongo(zipCode, citiesData)
     res.header('Content-Type', 'application/json')
-    res.send(JSON.stringify(weatherData, null, 4))
+    res.send(JSON.stringify(citiesData, null, 4))
 });
 
-router.get('./weatherMongo', async(req, res) => {
+App.get('./citiesMongo', async(req, res) => {
     const {zipCode} = req.query;
-    let weather = new Weather()
+    let cities = newCities()
 
-    let weatherData = await weather.getWeatherDataFromMongo(zipCode)
+    let citiesData = await cities.getCitiesDataFromMongo(zipCode)
     res.header('Content-Type', application/json)
-    res.send(JSON.Stirngify(weatherData, null, 4))
+    res.send(JSON.Stirngify(citiesData, null, 4))
 
 })
 
 
-module.exports = router 
+module.exports = App

@@ -5,7 +5,7 @@ const app = express ();
 const db = mongoose.connection;
 // const cors = require('cors');
 require('dotenv').config();
-const Weather = require('./models/weather.js')
+const Cities = require('./models/cities.js')
 
 
 //Port
@@ -13,12 +13,7 @@ const PORT = process.env.PORT
 // How to connect to the database either via heroku or locally
 const MONGODB_URI = process.env.MONGODB_URI;
 // Connect to Mongo &
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}, () => {
-  console.log('MongoDB listening...')
-});
+mongoose.connect(MONGODB_URI)
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -28,9 +23,9 @@ app.get('/' , (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/weather', (req, res) => {
-  Weather.find({}).then((foundWeather) => {
-    res.json(foundWeather)
+app.get('/cities', (req, res) => {
+  Cities.find({}).then((foundCities) => {
+    res.json(foundCities)
   })
 });
 

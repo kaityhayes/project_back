@@ -1,3 +1,3 @@
-import Weather from "./weather.js"
+import Cities from "./cities.js"
 
-export { weather }; 
+export { Cities }; 

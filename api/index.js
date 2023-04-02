@@ -35,19 +35,12 @@ Log.create({ city, country, date, description, image, rating })
 
 
 app.get('/', (req, res) => {
-  Log.find()
-    .then(logs => {
-      res.json(logs);
-    })
+  Log.find({}, (err, foundLog) => {
+    res.json(foundLog)
+  })
     .catch(err => console.log("GET Error: ", err))
 });
 
-app.get('/:id', async (req, res) => {
-  Log.find().then(log => {
-    res.json(log)
-  })
-  .catch(error => console.log("GET Error: ", error))
-});
 
 
   app.put('/logs/:id', (req, res) => {

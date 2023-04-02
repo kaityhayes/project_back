@@ -15,11 +15,11 @@ const logSchema = new mongoose.Schema ({
   },
   image: String,
   latitude: {
-    type: Number,
+    type: String,
     required: false
   },
   longitude: {
-    type: Number,
+    type: String,
     required: false
   },
   startDate: {

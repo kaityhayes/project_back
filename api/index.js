@@ -39,10 +39,7 @@ app.get('/', (req, res) => {
     .then(logs => {
       res.json(logs);
     })
-    .catch(err => {
-      console.log(err);
-      res.status().json({ error: 'Server error' });
-    })
+    .catch(err => console.log("GET Error: ", err))
 });
 
 app.get('/:id', async (req, res) => {

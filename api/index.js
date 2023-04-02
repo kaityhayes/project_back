@@ -1,39 +1,57 @@
 const express = require('express')
-const App = express()
+const mongoose = require('mongoose')
 const cors = require('cors')
-const Cities = require('./models/cities')
-const City = require('./models/cities.js')
 
-App.post('/cities', async (req, res) => {
-    let cities = new City()
-
-    let citiesData = await cities.getCitiesData(78702, 'us')
+const app = express()
 
 
-    res.header('Content-Type', 'application/json')
-    res.send(JSON.stringify(citiesData, null, 4))
-});
+app.use(cors())
+app.use(express.json())
 
-
-App.post('/citiesMongo', async (req, res) => {
-    const {zipCode, tempImperial} = req.body
-    let cities = new Cities()
-    let citiesData = await cities.getCitiesData(zipCode, tempImperial)
-
-    await cities.saveCitiesDataMongo(zipCode, citiesData)
-    res.header('Content-Type', 'application/json')
-    res.send(JSON.stringify(citiesData, null, 4))
-});
-
-App.get('./citiesMongo', async(req, res) => {
-    const {zipCode} = req.query;
-    let cities = newCities()
-
-    let citiesData = await cities.getCitiesDataFromMongo(zipCode)
-    res.header('Content-Type', application/json)
-    res.send(JSON.Stirngify(citiesData, null, 4))
-
+mongoose.connect('/localhost:3008', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err))
 
 
-module.exports = App
+const Log = require('./models/logSchema')
+
+
+app.get('/logs', async (req, res) => {
+    try {
+      const logs = await Log.find()
+      res.json(logs)
+    } catch (err) {
+      console.error(err)
+      res.status().json({ message: 'Server error' })
+    }
+  });
+
+
+  app.post('/logs', async (req, res) => {
+    try {
+      const { title, description, image, latitude, longitude, visitDate, rating } = req.body
+      const log = new Log({ title, description, image, latitude, longitude, visitDate, rating })
+      await log.save()
+      res.json(log)
+    } catch (err) {
+      console.error(err)
+      res.status().json({ message: 'Server error' })
+    }
+  });
+
+
+  app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status().json({ message: 'Server error' })
+  });
+
+
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+module.exports = app
+

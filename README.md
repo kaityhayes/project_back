@@ -45,6 +45,6 @@ You will be sharing your app and your code. Be prepared to answer questions from
 https://git.generalassemb.ly/Software-Engineering-Immersive-Remote/SEIR-Ollivanders/tree/master/unit_3/27_project/project_3#attendance
 
 
---WEATHER APP--
+--TRAVEL LOG--
 Unti 3, full-stack MERN
 Created by Dominique Clark and Kaity Hayes 

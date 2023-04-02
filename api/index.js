@@ -32,7 +32,7 @@ app.get('/logs', async (req, res) => {
 
   app.post('/logs', async (req, res) => {
     try {
-      const { title, description, image, latitude, longitude, visitDate, rating } = req.body
+      const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body
       const log = new Log({ title, description, image, latitude, longitude, visitDate, rating })
       await log.save()
       res.json(log)

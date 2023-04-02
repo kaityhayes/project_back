@@ -16,7 +16,7 @@ exports.getAllLogs = async (req, res, next) => {
 
 exports.createLog = async (req, res, next) => {
   try {
-    const { title, description, image, latitude, longitude, visitDate, rating } = req.body;
+    const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body;
     const log = new Log({ title, description, image, latitude, longitude, visitDate, rating });
     await log.save();
     res.json(log);
@@ -41,7 +41,7 @@ exports.getLogById = async (req, res, next) => {
 
 exports.updateLogById = async (req, res, next) => {
   try {
-    const { title, description, image, latitude, longitude, visitDate, rating } = req.body;
+    const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body;
     const log = await Log.findByIdAndUpdate(req.params.id, { title, description, image, latitude, longitude, visitDate, rating }, { new: true });
     if (!log) return res.status(404).json({ message: 'Log not found' });
     res.json(log);

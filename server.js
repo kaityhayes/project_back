@@ -33,7 +33,7 @@ app.get('/logs', (req, res) => {
 });
 
 app.post('/logs', (req, res) => {
-  const { title, description, image, latitude, longitude } = req.body;
+  const { city, country, description, image, latitude, longitude } = req.body;
   const newLog = new Log({
     title,
     description,
@@ -52,7 +52,7 @@ app.post('/logs', (req, res) => {
 });
 
 app.put('/logs/:id', (req, res) => {
-  const { title, description, image, latitude, longitude } = req.body;
+  const { city, country, description, image, latitude, longitude } = req.body;
   Log.findByIdAndUpdate(req.params.id, {
     title,
     description,

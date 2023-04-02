@@ -3,14 +3,11 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const app = express()
-
-
 app.use(cors())
 app.use(express.json())
 
 mongoose.connect('/localhost:3008', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
 })
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err))
@@ -18,36 +15,70 @@ mongoose.connect('/localhost:3008', {
 
 const Log = require('./models/logSchema')
 
+app.post('/', (req, res) => {
+  console.log(req.body)
+  const { city, country, date, description, image, latitude, longitude, rating } = req.body;
+  const newLog = new Log({
+    city,
+    country,
+    date,
+    description,
+    image,
+    rating,
+  } = req.body)
+Log.create({ city, country, date, description, image, rating })
+.then(log => {
+  res.json(log)
+})
+.catch(error => console.log("POST Error: ", error))
+});
 
-app.get('/logs', async (req, res) => {
-    try {
-      const logs = await Log.find()
-      res.json(logs)
-    } catch (err) {
-      console.error(err)
-      res.status().json({ message: 'Server error' })
-    }
+
+app.get('/', (req, res) => {
+  Log.find()
+    .then(logs => {
+      res.json(logs);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status().json({ error: 'Server error' });
+    })
+});
+
+app.get('/:id', async (req, res) => {
+  Log.find().then(log => {
+    res.json(log)
+  })
+  .catch(error => console.log("GET Error: ", error))
+});
+
+
+  app.put('/logs/:id', (req, res) => {
+    const { city, country, date, description, image, latitude, longitude, rating } = req.body;
+    Log.findByIdAndUpdate(req.params.id, {
+      city,
+      country,
+      date,
+      description,
+      image,
+      latitude,
+      longitude,
+      rating
+    }, ((updatedLog).then(log => {
+      updatedLog._id = log._id
+      res.json(updatedLog)
+    }))
+    .catch(err => console.log("UPDATE Error: ", err)))
   });
 
 
-  app.post('/logs', async (req, res) => {
-    try {
-      const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body
-      const log = new Log({ title, description, image, latitude, longitude, visitDate, rating })
-      await log.save()
-      res.json(log)
-    } catch (err) {
-      console.error(err)
-      res.status().json({ message: 'Server error' })
-    }
-  });
-
-
-  app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.status().json({ message: 'Server error' })
-  });
-
+  app.delete('/logs/:id', (req, res) => {
+    Log.findByIdAndDelete(req.params.id)
+      .then(() => {
+       res.json(log)
+      })
+      .catch(err => console.log("DELETE Error: ", err))
+    });
 
 
 const PORT = process.env.PORT || 5000;

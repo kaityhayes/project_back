@@ -1,54 +1,68 @@
-const Log = require('./models/logSchema');
-const mongoose = require('mongoose')
-const express = require('express')
+// // const Log = mongoose.model('Log', logSchema);
 
+// //Routes
+// app.get('/logs', (req, res) => {
+//   Log.find()
+//     .then(logs => {
+//       res.json(logs);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status().json({ error: 'Server error' });
+//     })
+// });
 
-exports.getAllLogs = async (req, res, next) => {
-  try {
-    const logs = await Log.find();
-    res.json(logs);
-  } catch (err) {
-    console.error(err);
-    res.status().json({ message: 'Server error' });
-  }
-};
+// app.post('/logs', (req, res) => {
+//   const { city, country, date, description, image, latitude, longitude, rating } = req.body;
+//   const newLog = new Log({
+//     city,
+//     country,
+//     date,
+//     description,
+//     image,
+//     rating,
+//   })
+//   newLog.save()
+//     .then(log => {
+//       res.json(log);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status().json({ error: 'Server error' });
+//     })
+// });
 
+// app.put('/logs/:id', (req, res) => {
+//   const { city, country, date, description, image, latitude, longitude, rating } = req.body;
+//   Log.findByIdAndUpdate(req.params.id, {
+//     city,
+//     country,
+//     date,
+//     description,
+//     image,
+//     latitude,
+//     longitude,
+//     rating
+//   }, { new: true })
+//     .then(log => {
+//       res.json(log);
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status().json({ error: 'Server error' })
+//     })
+// });
 
-exports.createLog = async (req, res, next) => {
-  try {
-    const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body;
-    const log = new Log({ title, description, image, latitude, longitude, visitDate, rating });
-    await log.save();
-    res.json(log);
-  } catch (err) {
-    console.error(err);
-    res.status().json({ message: 'Server error' });
-  }
-};
+// app.delete('/logs/:id', (req, res) => {
+//   Log.findByIdAndDelete(req.params.id)
+//     .then(() => {
+//       res.json({ success: true });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       res.status().json({ error: 'Server error' });
+//     })
+// });
 
-
-exports.getLogById = async (req, res, next) => {
-  try {
-    const log = await Log.findById(req.params.id);
-    if (!log) return res.status(404).json({ message: 'Log not found' });
-    res.json(log);
-  } catch (err) {
-    console.error(err);
-    res.status().json({ message: 'Server error' });
-  }
-};
-
-
-exports.updateLogById = async (req, res, next) => {
-  try {
-    const { city, country, description, image, latitude, longitude, visitDate, rating } = req.body;
-    const log = await Log.findByIdAndUpdate(req.params.id, { title, description, image, latitude, longitude, visitDate, rating }, { new: true });
-    if (!log) return res.status(404).json({ message: 'Log not found' });
-    res.json(log);
-  } catch (err) {
-    console.error(err);
-    res.status().json({ message: 'Server error' });
-  }
-};
    
 

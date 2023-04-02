@@ -22,7 +22,11 @@ const logSchema = new mongoose.Schema ({
     type: Number,
     required: false
   },
-  visitDate: {
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
     type: Date,
     required: true
   },

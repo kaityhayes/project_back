@@ -4,24 +4,24 @@ const cors = require('cors')
 const Log = require('./models/logSchema.js')
 const app = express();
 const port = process.env.PORT || 3008
-// const Log = './models/logSchema.js'
+const LogSeed = require('./seed.js')
 
 app.use(cors());
 app.use(express.json())
 
 
-app.get('/seed', (req, res) => {
-  Log.create(LogSeed).then(log => {
-    res.redirect('/')
-  })
-  .catch(err => console.log("GET Seed Error: ", err))
-})
+// app.get('/seed', (req, res) => {
+//   Log.create(LogSeed).then(log => {
+//     res.redirect('/')
+//   })
+//   .catch(err => console.log("GET Seed Error: ", err))
+// })
 
 app.get('/', (req, res) => {
-  Log.find({}, (err, foundLog) => {
-    res.json(foundLog)
-  })
-    .catch(err => console.log("GET Error: ", err))
+  Log.find({}).then(foundLog => {
+      res.json(foundLog);
+    })
+    .catch(err => console.log("GET Error: ", err));
 });
 
 app.post('/', (req, res) => {

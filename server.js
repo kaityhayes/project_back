@@ -5,10 +5,11 @@ const Log = require('./models/logSchema.js')
 const app = express();
 const port = process.env.PORT || 3008
 const LogSeed = require('./seed.js')
-
+require("dotenv").config();
 const db=mongoose.connection 
 const MONGODB_URI=process.env.MONGODB_URI
 mongoose.connect(MONGODB_URI)
+
 
 app.use(cors());
 app.use(express.json())
@@ -23,24 +24,26 @@ app.use(express.urlencoded({ extended: false }));
 // })
 
 app.get('/log', (req, res) => {
-  Log.find({}).then(foundLog => {
+  Log.find({}).then((foundLog => {
       res.json(foundLog);
-    })
+    }))
     .catch(err => console.log("GET Error: ", err));
 });
 
 app.post('/log', (req, res) => {
   console.log(req.body)
-  const { city, country, date, description, image, latitude, longitude, rating } = req.body;
-  const newLog = new Log({
-    city,
-    country,
-    date,
-    description,
-    image,
-    rating,
-  } = req.body)
-Log.create({ city, country, date, description, image, rating })
+  // const { city, country, description, travelers, startDate, endDate, image, rating } = req.body;
+  // const newLog = new Log({
+  //   city,
+  //   country,
+  //   description,
+  //   travelers,
+  //   startDate,
+  //   endDate,
+  //   image,
+  //   rating,
+  // } = req.body)
+Log.create(req.body)
 .then(log => {
   res.json(log)
 })
@@ -54,20 +57,20 @@ res.json(updatedLog)
 });
 
 app.put('/log/:id', (req, res) => {
-  const { city, country, date, description, image, latitude, longitude, rating } = req.body;
+  const { city, country, description, travelers, startDate, endDate, image, rating } = req.body;
   Log.findByIdAndUpdate(req.params.id, {
     city,
     country,
-    date,
     description,
+    travelers,
+    startDate,
+    endDate,
     image,
-    latitude,
-    longitude,
-    rating
-  }, ((updatedLog).then(log => {
+    rating,
+  }, ((updatedLog).then((log => {
     updatedLog._id = log._id
     res.json(updatedLog)
-  }))
+  })))
   .catch(err => console.log("UPDATE Error: ", err)))
 });
 
@@ -84,6 +87,6 @@ app.listen(port, () => {
 });
 
 
-mongoose.connection.once('open', ()=>{
-    console.log('connected to mongod...');
-});
+// mongoose.connection.once('open', ()=>{
+//     console.log('connected to mongod...');
+// });

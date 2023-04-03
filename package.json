@@ -28,6 +28,5 @@
     "nodemon": "^2.0.22"
   },
   "description": "Technical Requirements 🔴 Mandatory to pass: MVP - Minimum Viable Product For this project, you will be making another full CRUD app using the technologies outlined below.",
-  "main": "server.js",
-  "devDependencies": {}
+  "main": "server.js"
 }

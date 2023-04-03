@@ -17,8 +17,8 @@ const LogSeed = [
         startDate: 05/01/2021,
         endDate: 05/09/2021,
         rating: 4.5 
-
     }
-];
+]
+
 
 module.exports = LogSeed; 

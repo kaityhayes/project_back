@@ -13,12 +13,7 @@ const logSchema = new mongoose.Schema ({
     type: String,
     required: true
   },
-  image: String,
-  latitude: {
-    type: String,
-    required: false
-  },
-  longitude: {
+  travelers: {
     type: String,
     required: false
   },
@@ -32,10 +27,13 @@ const logSchema = new mongoose.Schema ({
   },
   rating: {
     type: Number,
-    min: 0,
-    max: 5,
-    default: 0
+    required: true
+  }, 
+  image: {
+    type: String,
+    required: true
   }
+
 })
 
 module.exports = mongoose.model('Log', logSchema)

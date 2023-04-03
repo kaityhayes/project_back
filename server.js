@@ -6,25 +6,30 @@ const app = express();
 const port = process.env.PORT || 3008
 const LogSeed = require('./seed.js')
 
+const db=mongoose.connection 
+const MONGODB_URI=process.env.MONGODB_URI
+mongoose.connect(MONGODB_URI)
+
 app.use(cors());
 app.use(express.json())
-
+app.use(express.static("public"))
+app.use(express.urlencoded({ extended: false }));
 
 // app.get('/seed', (req, res) => {
 //   Log.create(LogSeed).then(log => {
-//     res.redirect('/')
+//     res.redirect('/log')
 //   })
 //   .catch(err => console.log("GET Seed Error: ", err))
 // })
 
-app.get('/', (req, res) => {
+app.get('/log', (req, res) => {
   Log.find({}).then(foundLog => {
       res.json(foundLog);
     })
     .catch(err => console.log("GET Error: ", err));
 });
 
-app.post('/', (req, res) => {
+app.post('/log', (req, res) => {
   console.log(req.body)
   const { city, country, date, description, image, latitude, longitude, rating } = req.body;
   const newLog = new Log({
@@ -42,13 +47,13 @@ Log.create({ city, country, date, description, image, rating })
 .catch(error => console.log("POST Error: ", error))
 });
 
-app.put('/:id', (req, res) => {
+app.put('/log/:id', (req, res) => {
   Log.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedLog) => {
 res.json(updatedLog)
   })
 });
 
-app.put('/:id', (req, res) => {
+app.put('/log/:id', (req, res) => {
   const { city, country, date, description, image, latitude, longitude, rating } = req.body;
   Log.findByIdAndUpdate(req.params.id, {
     city,
@@ -66,7 +71,7 @@ app.put('/:id', (req, res) => {
   .catch(err => console.log("UPDATE Error: ", err)))
 });
 
-app.delete('/:id', (req, res) => {
+app.delete('/log/:id', (req, res) => {
   Log.findByIdAndRemove(req.params.id, (err, deletedLog) => {
     res.json(deletedLog)
   })
@@ -78,7 +83,7 @@ app.listen(port, () => {
   console.log(`Server started on port ${port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017/travelLog')
+
 mongoose.connection.once('open', ()=>{
     console.log('connected to mongod...');
 });

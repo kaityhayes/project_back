@@ -48,3 +48,4 @@ https://git.generalassemb.ly/Software-Engineering-Immersive-Remote/SEIR-Ollivand
 --TRAVEL LOG--
 Unti 3, full-stack MERN
 Created by Dominique Clark and Kaity Hayes 
+Front-end created by Dominique Clark
